@@ -13,12 +13,12 @@ model = CustomLongformerForSequenceClassification.from_pretrained(
 )
 model = model.to(device)
 model.eval()
-long_former_tokenizer = LongformerTokenizer.from_pretrained('checkpoints/Longformer', local_files_only=True)
-model_name = 'checkpoints/Qwen3'
+long_former_tokenizer = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
+model_name = 'Qwen/Qwen3-1.7B'
 
 
-qwen_tokenizer = AutoTokenizer.from_pretrained(model_name, device='auto', local_files_only=True)
-qwen_model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, local_files_only=True).half().to(device)
+qwen_tokenizer = AutoTokenizer.from_pretrained(model_name, device='auto')
+qwen_model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16).half().to(device)
 
 qwen_tokenizer.pad_token_id = qwen_tokenizer.eos_token_id
 
@@ -47,7 +47,6 @@ def generate_and_score_essay(row):
             **inputs,
             max_new_tokens=1500,
             use_cache=True, 
-            do_sample=False,
             pad_token_id=qwen_tokenizer.eos_token_id
         )
     # Alternative decoding (ensure no special tokens leak)
