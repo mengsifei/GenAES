@@ -1,0 +1,8 @@
+torch==2.7.0
+transformers==4.51.3
+pandas==2.2.1
+cefrpy
+spacy
+numpy==1.26.4
+accelerate
+optimum==1.26.1
