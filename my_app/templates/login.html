@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="center-text">Login</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" autocomplete="off" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" autocomplete="off" name="password" required>
+        </div>
+        <input type="hidden" id="message" value="{{ message }}">
+        <div class="btn-center">
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+    </form>
+    <!-- Modal HTML -->
+    <div class="modal fade" id="loginAlertModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login Alert</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Message will be inserted here via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $(document).ready(function() {
+        var message = $('#message').val();
+        if (message) {
+            $('#loginAlertModal .modal-body').text(message);
+            $('#loginAlertModal').modal('show');
+        } 
+    });
+</script>
+{% endblock %}

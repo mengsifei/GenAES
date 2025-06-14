@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Error</h2>
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+    <a href="{{ url_for('infer.index') }}" class="btn btn-primary">Go Back to Home</a>
+</div>
+{% endblock %}

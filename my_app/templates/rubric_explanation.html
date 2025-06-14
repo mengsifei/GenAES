@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Rubric Explanation{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="center-text">Explanation</h2>
+    <div class="row text-center mb-2">
+        <div class="col-md-7">
+            <a href="{{ url_for('infer.task_response') }}" class="btn btn-primary mt-3">Task Response Explanation</a>
+        </div>
+        <div class="col-md-5">
+            <a href="{{ url_for('infer.coherence_cohesion') }}" class="btn btn-primary mt-3">Coherence and Cohesion Explanation</a>
+        </div>
+    </div>
+    <div class="row text-center mb-2">
+        <div class="col-md-7">
+            <a href="{{ url_for('infer.lexical_resource') }}" class="btn btn-primary mt-3">Lexical Resource Explanation</a>
+        </div>
+        <div class="col-md-5">
+            <a href="{{ url_for('infer.grammatical_range_accuracy') }}" class="btn btn-primary mt-3">Grammatical Range and Accuracy Explanation</a>
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="{{ url_for('infer.index') }}" class="btn btn-primary mt-3">Back</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Task Response</h2>
+    <div class="flashcards">
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 9
+                </div>
+                <div class="flashcard-back">
+                    The prompt is appropriately addressed and explored in depth. A clear and fully developed position is presented which directly answers the question/s. Ideas are relevant, fully extended and well supported. Any lapses in content or support are extremely rare.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 8
+                </div>
+                <div class="flashcard-back">
+                    The prompt is appropriately and sufficiently addressed. A clear and well-developed position is presented in response to the question/s. Ideas are relevant, well extended and supported. There may be occasional omissions or lapses in content.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 7
+                </div>
+                <div class="flashcard-back">
+                    The main parts of the prompt are appropriately addressed. A clear and developed position is presented. Main ideas are extended and supported but there may be a tendency to over-generalise or there may be a lack of focus and precision in supporting ideas/material.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 6
+                </div>
+                <div class="flashcard-back">
+                    The main parts of the prompt are addressed (though some may be more fully covered than others). An appropriate format is used. A position is presented that is directly relevant to the prompt, although the conclusions drawn may be unclear, unjustified or repetitive.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 5
+                </div>
+                <div class="flashcard-back">
+                    The main parts of the prompt are incompletely addressed. The format may be inappropriate in places. The writer expresses a position, but the development is not always clear. Some main ideas are put forward, but they are limited and are not sufficiently developed and/or there may be irrelevant detail.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 4
+                </div>
+                <div class="flashcard-back">
+                    The prompt is tackled in a minimal way, or the answer is tangential, possibly due to some misunderstanding of the prompt. The format may be inappropriate. A position is discernible, but the reader has to read carefully to find it. Main ideas are difficult to identify and such ideas that are identifiable may lack relevance, clarity and/or support.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 3
+                </div>
+                <div class="flashcard-back">
+                    No part of the prompt is adequately addressed, or the prompt has been misunderstood. No relevant position can be identified, and/or there is little direct response to the question/s. There are few ideas, and these may be irrelevant or insufficiently developed.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 2
+                </div>
+                <div class="flashcard-back">
+                    The content is barely related to the prompt. No position can be identified. There may be glimpses of one or two ideas without development. There is little relevant message, or the entire response may be off-topic.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 1
+                </div>
+                <div class="flashcard-back">
+                    Responses of 20 words or fewer are rated at Band 1. The content is wholly unrelated to the prompt. Any copied rubric must be discounted.
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('infer.rubric_explanation') }}" class="btn btn-primary">Go Back to Rubric Explanation Page</a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flashcards.css') }}">
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="center-text">Register</h2>
+    <form method="POST" id="registrationForm">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" autocomplete="off" name="email" required>
+            <small id="emailHelp" class="form-text text-muted">Your email here. Example: example@domain.com</small>
+        </div>
+        <div class="mb-3">
+            <label for="nickname" class="form-label">Nickname:</label>
+            <input type="text" class="form-control" id="nickname" autocomplete="off" name="nickname" required>
+            <small id="nicknameHelp" class="form-text text-muted">Your nickname here. Example: Nickname1</small>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="password" autocomplete="off" name="password" required>
+            <small id="passwordHelp" class="form-text text-muted">Your password should be more than 8 symbols.</small>
+        </div>
+        <div class="mb-3">
+            <label for="repeatPassword" class="form-label">Repeat Password:</label>
+            <input type="password" class="form-control" id="repeatPassword" autocomplete="off" name="repeatPassword" required>
+        </div>
+        <input type="hidden" id="message" value="{{ message }}">
+        <div class="btn-center">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
+
+    <!-- Registration Alert Modal -->
+    <div class="modal fade" id="registrationAlertModal" tabindex="-1" role="dialog" aria-labelledby="registrationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registrationModalLabel">Registration Alert</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Message will be inserted here via JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+    $(document).ready(function() {
+        // Show message if provided
+        var message = $('#message').val();
+        if (message) {
+            $('#registrationAlertModal .modal-body').text(message);
+            $('#registrationAlertModal').modal('show');
+        }
+
+        // Validate passwords before submission
+        $('#registrationForm').on('submit', function(e) {
+            var password = $('#password').val();
+            var repeatPassword = $('#repeatPassword').val();
+            if (password !== repeatPassword) {
+                e.preventDefault(); // Prevent form submission
+                $('#registrationAlertModal .modal-body').text('Passwords do not match!');
+                $('#registrationAlertModal').modal('show');
+            }
+        });
+    });
+</script>
+{% endblock %}

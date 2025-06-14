@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Coherence & Cohesion</h2>
+    <div class="flashcards">
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 9
+                </div>
+                <div class="flashcard-back">
+                    The message can be followed effortlessly. Cohesion is used in such a way that it very rarely attracts attention. Any lapses in coherence or cohesion are minimal. Paragraphing is skilfully managed.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 8
+                </div>
+                <div class="flashcard-back">
+                    The message can be followed with ease. Information and ideas are logically sequenced, and cohesion is well managed. Occasional lapses in coherence and cohesion may occur. Paragraphing is used sufficiently and appropriately.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 7
+                </div>
+                <div class="flashcard-back">
+                    Information and ideas are logically organised, and there is a clear progression throughout the response. 
+                    A range of cohesive devices including reference and substitution is used flexibly but with some inaccuracies or some over/under use. 
+                    Paragraphing is generally used effectively to support overall coherence, and the sequencing of ideas within a paragraph is generally logical.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 6
+                </div>
+                <div class="flashcard-back">
+                    Information and ideas are generally arranged coherently and there is a clear overall progression. Cohesive devices are used to some good effect but cohesion within and/or between sentences may be faulty or mechanical due to misuse, overuse or omission. The use of reference and substitution may lack flexibility or clarity and result in some repetition or error. Paragraphing may not always be logical and/or the central topic may not always be clear.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 5
+                </div>
+                <div class="flashcard-back">
+                    Organisation is evident but is not wholly logical and there may be a lack of overall progression. Nevertheless, there is a sense of underlying coherence to the response. The relationship of ideas can be followed but the sentences are not fluently linked to each other. There may be limited/overuse of cohesive devices with some inaccuracy. The writing may be repetitive due to inadequate and/or inaccurate use of reference and substitution. Paragraphing may be inadequate or missing.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 4
+                </div>
+                <div class="flashcard-back">
+                    Information and ideas are evident but not arranged coherently and there is no clear progression within the response. Relationships between ideas can be unclear and/or inadequately marked. There is some use of basic cohesive devices, which may be inaccurate or repetitive. There is inaccurate use or a lack of substitution or referencing. There may be no paragraphing and/or no clear main topic within paragraphs.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 3
+                </div>
+                <div class="flashcard-back">
+                    There is no apparent logical organisation. Ideas are discernible but difficult to relate to each other. There is minimal use of sequencers or cohesive devices. Those used do not necessarily indicate a logical relationship between ideas. There is difficulty in identifying referencing. Any attempts at paragraphing are unhelpful.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 2
+                </div>
+                <div class="flashcard-back">
+                    There is little evidence of control of organisational features.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 1
+                </div>
+                <div class="flashcard-back">
+                    Responses of 20 words or fewer are rated at Band 1. There is no apparent control of organisational features.
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('infer.rubric_explanation') }}" class="btn btn-primary">Go Back to Rubric Explanation Page</a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flashcards.css') }}">
+{% endblock %}

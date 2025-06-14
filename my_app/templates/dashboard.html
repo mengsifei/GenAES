@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="center-text">Dashboard</h2>
+    <form method="POST" action="{{ url_for('dashboard.delete_histories') }}">
+        <div class="row mt-4">
+            <div class="col-lg-6 mb-4">
+                <h4>Rubric Score Dynamics</h4>
+                <canvas id="RubricChart"></canvas>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <h4>Number of Essays Checked per Day</h4>
+                <canvas id="EssayCountChart"></canvas>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"><input id="select-all" type="checkbox" onclick="selectAll(this)"></th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Topic</th>
+                    <th scope="col">Essay</th>
+                    <th scope="col">Task Response</th>
+                    <th scope="col">Coherence and Cohesion</th>
+                    <th scope="col">Lexical Resource</th>
+                    <th scope="col">Grammatical Range and Accuracy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in histories %}
+                    <tr>
+                        <td>{{ loop.index }}</td> 
+                        <td><input type="checkbox" name="history_ids" value="{{ history.id }}"></td>
+                        <td>{{ history.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td onclick="showModal('{{ history.topic }}')">{{ history.topic | truncate(10) }}</td>
+                        <td onclick="showModal('{{ history.essay }}')">{{ history.essay | truncate(100) }}</td>
+                        <td>{{ history.score_tr | int }}</td>
+                        <td>{{ history.score_cc | int }}</td>
+                        <td>{{ history.score_lr | int }}</td>
+                        <td>{{ history.score_gra | int }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger">Delete Selected</button>
+        </div>
+    </form>
+<nav aria-label="Page navigation example" style="margin-top: 50px;">
+    <ul class="pagination justify-content-center">
+      {% if pagination.has_prev %}
+      <li class="page-item">
+          <a class="page-link" href="{{ url_for('dashboard.dashboard', page=pagination.prev_num) }}">Previous</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Previous</span></li>
+      {% endif %}
+  
+      {% for page in pagination.iter_pages(left_edge=2, left_current=1, right_current=2, right_edge=2) %}
+      <li class="page-item {{ 'active' if page == pagination.page else '' }}">
+          {% if page %}
+          <a class="page-link" href="{{ url_for('dashboard.dashboard', page=page) }}">{{ page }}</a>
+          {% else %}
+          <span class="page-link">...</span>
+          {% endif %}
+      </li>
+      {% endfor %}
+  
+      {% if pagination.has_next %}
+      <li class="page-item">
+          <a class="page-link" href="{{ url_for('dashboard.dashboard', page=pagination.next_num) }}">Next</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><span class="page-link">Next</span></li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>
+<div class="modal fade" id="contentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Full Content</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="max-height:400px; overflow-y:auto;">
+                <p id="content-text"></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const scoresTR = JSON.parse('{{ scores_tr|tojson|safe }}');
+        const scoresCC = JSON.parse('{{ scores_cc|tojson|safe }}');
+        const scoresLR = JSON.parse('{{ scores_lr|tojson|safe }}');
+        const scoresGRA = JSON.parse('{{ scores_gra|tojson|safe }}');
+        const creationTimes = JSON.parse('{{ creation_times|tojson|safe }}');
+        initializeCharts(scoresTR, scoresCC, scoresLR, scoresGRA, creationTimes);
+    });
+</script>
+<script src="{{ url_for('static', filename='js/dashboard_charts.js') }}"></script>
+
+{% endblock %}

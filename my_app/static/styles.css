@@ -1,0 +1,329 @@
+:root {
+    --background-color: rgb(46, 44, 46);
+    --navbar-color: rgb(52, 45, 53, 0.0);
+    --footer-background-color: var(--navbar-color);
+    --footer-text-color: rgb(145, 128, 128);
+    --title-color: #d6cdcd;
+    --button-bg-color: #505050;
+    --button-hover-bg-color: #404040;
+    --button-border-color: #404040;
+    --button-hover-border-color: #303030;
+    --input-bg-color: rgba(255, 255, 255, 0.5);
+    --input-text-color: #d6cdcd;
+    --alert-color: var(--input-text-color);
+    --toggle-color: #45586d;
+    --link-color: var(--title-color);
+    --link-hover-color: var(--title-color);
+    --modal-background-color: var(--background-color);
+    --modal-text-color: var(--title-color);
+}
+
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    background-image: url("");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: -1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--title-color);
+    font-family: 'Georgia', serif;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+    background-color: rgba(10, 9, 9, 0.5);
+    border: 1px solid #100f0f;
+    color: white;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+textarea {
+    background-color:transparent;  
+    background:  transparent;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--modal-background-color);
+    color: var(--modal-background-color);
+    z-index: 1050; 
+}
+
+.modal-header .close {
+    color: var(--modal-text-color);
+}
+
+body, h1, h2, h3, p, a {
+    font-family: 'Georgia', serif;
+    text-align: center;
+}
+
+table {
+    margin-top: 20px;
+    color: var(--title-color);
+}
+
+thead {
+    color: var(--title-color);
+}
+
+tbody {
+    color: var(--title-color);
+}
+
+.footer {
+    background-color: var(--footer-background-color);
+    color: var(--footer-text-color);
+    padding: 10px;
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar {
+    margin-bottom: 20px;
+    background-color: var(--navbar-color);
+}
+
+a.nav-link {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a.nav-link:hover {
+    color: var(--link-hover-color);
+}
+
+.center-text {
+    text-align: center;
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+}
+
+.footer a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: var(--link-hover-color);
+}
+
+textarea {
+    background-color: #1e0606 ;
+    border: 1px solid #ccc;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+.btn-primary {
+    background-color: var(--button-bg-color);
+    border-color: var(--button-border-color);
+    margin-bottom: 20px;
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-bg-color);
+    border-color: var(--button-hover-border-color);
+}
+
+h1, h2 {
+    color: var(--title-color);
+    padding-top: 20px;
+}
+
+.table td, .table th {
+    text-align: left;
+    vertical-align: middle;
+}
+
+.text-center {
+    margin-top: 20px;
+}
+
+.btn-danger {
+    width: 100px;
+}
+
+.btn-info {
+    width: 100px;
+    height: 50;
+}
+
+.form-text.text-muted {
+    color: var(--alert-color) !important;
+}
+
+.btn-toggle {
+    border: none;
+    background: none;
+    color: var(--toggle-color);
+    cursor: pointer;
+}
+
+.content-hidden {
+    display: none;
+}
+
+.container {
+    flex: 1;
+}
+
+.modal-content {
+    background-color: var(--modal-background-color);
+    color: var(--modal-text-color);
+}
+
+.modal-header .close {
+    color: var(--modal-text-color);
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 200px;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.flip-card-front {
+    background-color: #313840;
+    color: white;
+}
+
+.flip-card-back {
+    background-color: #8fa2b5;
+    color: black;
+    transform: rotateY(180deg);
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #343a40;
+    color: white;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.flashcards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flashcard {
+    background-color: white;
+    width: 300px;
+    height: 500px;
+    margin: 20px;
+    perspective: 1000px;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.flashcard:hover .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 10px;
+}
+
+.flashcard-front {
+    background-color: #091d2b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.flashcard-back {
+    background-color: rgb(207, 214, 234);
+    color: black;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: justify;
+}

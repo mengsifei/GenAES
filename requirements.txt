@@ -6,3 +6,7 @@ spacy
 numpy==1.26.4
 accelerate
 optimum==1.26.1
+flask==3.1.1
+flask_login==0.6.3
+werkzeug==3.0.3
+flask_sqlalchemy==3.1.1

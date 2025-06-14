@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Prediction Results{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Left Column: Topic and Essay -->
+        <div class="col-lg-7">
+            <h5>Topic</h5>
+            <p>{{ topic }}</p>
+            <h5>Essay</h5>
+            <p>{{ essay }}</p>
+        </div>
+        <!-- Right Column: Flip Cards -->
+        <div class="col-lg-5">
+            <div class="row">
+                {% set rubrics = [
+                    ('Task Response', result[0], 'How well the essay addresses the prompt.', 'task_response'),
+                    ('Coherence and Cohesion', result[1], 'How well the essay flows', 'coherence_cohesion'),
+                    ('Lexical Resource', result[2], 'How diverse is the vocabulary used.', 'lexical_resource'),
+                    ('Grammatical Range and Accuracy', result[3], 'How correct are the grammatical structures.', 'grammatical_accuracy')
+                ] %}
+                {% for rubric, score, explanation, link in rubrics %}
+                <div class="col-md-6 mb-4">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <h3>{{ rubric }}</h3>
+                                <p>Score: {{ score }}</p>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>{{ explanation }}</p>
+                                <a href="{{ url_for('infer.rubric_explanation') }}" class="btn btn-info mt-2">Learn More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="btn-center">
+        <a href="/" class="btn btn-primary mt-3">Back to Submission</a>
+    </div>
+</div>
+{% endblock %}

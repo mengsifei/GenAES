@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Grammatical Range & Accuracy</h2>
+    <div class="flashcards">
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 9
+                </div>
+                <div class="flashcard-back">
+                    A wide range of structures is used with full flexibility and control. Punctuation and grammar are used appropriately throughout. Minor errors are extremely rare and have minimal impact on communication.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 8
+                </div>
+                <div class="flashcard-back">
+                    A wide range of structures is flexibly and accurately used. The majority of sentences are error-free, and punctuation is well managed. Occasional, non-systematic errors and inappropriacies occur, but have minimal impact on communication.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 7
+                </div>
+                <div class="flashcard-back">
+                    A variety of complex structures is used with some flexibility and accuracy. Grammar and punctuation are generally well controlled, and error-free sentences are frequent. A few errors in grammar may persist, but these do not impede communication.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 6
+                </div>
+                <div class="flashcard-back">
+                    A mix of simple and complex sentence forms is used but flexibility is limited. Examples of more complex structures are not marked by the same level of accuracy as in simple structures. Errors in grammar and punctuation occur, but rarely impede communication.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 5
+                </div>
+                <div class="flashcard-back">
+                    The range of structures is limited and rather repetitive. Although complex sentences are attempted, they tend to be faulty, and the greatest accuracy is achieved on simple sentences. Grammatical errors may be frequent and cause some difficulty for the reader. Punctuation may be faulty.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 4
+                </div>
+                <div class="flashcard-back">
+                    A very limited range of structures is used. Subordinate clauses are rare and simple sentences predominate. Some structures are produced accurately but grammatical errors are frequent and may impede meaning. Punctuation is often faulty or inadequate.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 3
+                </div>
+                <div class="flashcard-back">
+                    Sentence forms are attempted, but errors in grammar and punctuation predominate (except in memorised phrases or those taken from the input material). This prevents most meaning from coming through.
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 2
+                </div>
+                <div class="flashcard-back">
+                    There is little or no evidence of sentence forms (except in memorised phrases).
+                </div>
+            </div>
+        </div>
+        <div class="flashcard">
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    Band 1
+                </div>
+                <div class="flashcard-back">
+                    Responses of 20 words or fewer are rated at Band 1. No rateable language is evident.
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="{{ url_for('infer.rubric_explanation') }}" class="btn btn-primary">Go Back to Rubric Explanation Page</a>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flashcards.css') }}">
+{% endblock %}

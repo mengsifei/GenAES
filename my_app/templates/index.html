@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Sidebar with Toggle Button Inside -->
+    <div id="sidebar" class="sidebar">
+        <!-- Sidebar Toggle Button -->
+        <button class="btn btn-primary" id="toggle-sidebar" style="position: absolute; top: 350px; right: -45px; z-index: 999;">☰</button>
+
+        <!-- Sidebar Content -->
+        <div class="sidebar-content">
+            <h3 id="countdown-timer" contenteditable="true">5:00</h3> <!-- Starting value -->
+            <button class="btn btn-info mt-2 mr-2" id="start-countdown">Start</button>
+            <button class="btn btn-danger mt-2" id="stop-countdown">Stop</button>
+            <div class="mt-4">
+                <label for="draft-text">Draft Text:</label>
+                <textarea id="draft-text" class="form-control" rows="8" placeholder="Type your draft here..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content: Essay Topic and Essay Content -->
+    <div style="margin-left: 30px;"> <!-- Adjust based on sidebar width -->
+        <h1 class="center-text">Enter Topic and Essay for Prediction</h1>
+        <form method="post" class="mt-4" id="essayForm">
+            <div class="mb-3">
+                <label for="topic" class="form-label">Essay Topic:</label>
+                <input type="text" id="topic" name="topic" class="form-control" autocomplete="off">
+            </div>
+            <div class="mb-3">
+                <label for="essay" class="form-label">Essay Content:</label>
+                <textarea style="background-color:rgba(10, 9, 9, 0.5); color:rgb(255, 255, 255); border: 1px solid #100f0f;" id="essay" name="essay" class="form-control" rows="8" autocomplete="off"></textarea>
+            </div>
+            <div class="btn-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <input type="hidden" id="isempty" value="{{ isempty }}">
+        </form>
+    </div>
+
+    <!-- Alert Modal -->
+    <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertModalLabel">Alert</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Please provide both a topic and an essay text.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/home_page.js') }}"></script>
+{% endblock %}
