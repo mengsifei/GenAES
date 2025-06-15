@@ -1,12 +1,10 @@
 from flask import render_template, session, request, redirect, url_for, flash
 from . import infer_bp
 import secrets
-from transformers import ElectraTokenizer
-from ..utils_func.utils import * 
-from ..models import History, db
+from ..database import History, db
 from flask_login import current_user
-import onnxruntime
-
+from inference.infer_single import * 
+from utils.util_func import *
 @infer_bp.route('/infer', methods=['GET'])
 def infer():
     token = request.args.get('token')
@@ -19,16 +17,22 @@ def infer():
     scores = session.get('scores', [])
     topic = session.get('topic', "")
     essay = session.get('essay', "")
+    feedback = session.get('feedback', {})
+    feedback = dict(feedback)
+    tr_feedback = feedback.get('TR_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
+    cc_feedback = feedback.get('CC_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
+    lr_feedback = feedback.get('LR_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
+    gra_feedback = feedback.get('GRA_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
+    corrected_essay = feedback.get('Corrected_essay', "No suggestions available. Your essay does not make sense, try to refine it.")
+    essay = essay.replace('\n', '<br>')
+    corrected_essay = corrected_essay.replace('\\n\\n', '\\n').replace('\\n', '<br>')
+    # print(corrected_essay)
     session.pop('inference_token', None)
-
-    return render_template('infer.html', result=scores, topic=topic, essay=essay)
+    return render_template('infer.html', result=scores, topic=topic, essay=essay, tr=tr_feedback, cc=cc_feedback, lr=lr_feedback, gra=gra_feedback, corrected_essay=corrected_essay)
 
 @infer_bp.route('/', methods=['GET', 'POST'])
 def index():
-    set_seed(40)
-    tokenizer = ElectraTokenizer.from_pretrained('google/electra-small-discriminator')
-    onnx_model_path = 'checkpoints/model.onnx'
-    model_session = onnxruntime.InferenceSession(onnx_model_path)
+    set_seed(42)
     if request.method == 'POST':
         topic = request.form['topic'].strip()
         essay = request.form['essay'].strip()
@@ -39,13 +43,16 @@ def index():
         if num_words < 20:
             session['scores'] = [1, 1, 1, 1]
             session['topic'] = topic
-            session['essay'] = essay  
-        else:
-            scores = score_essay_hier(topic, essay, tokenizer, model_session)
-            session['scores'] = scores.tolist()
-            session['topic'] = topic
             session['essay'] = essay
-        
+            session['feedback'] = {}
+        else:
+            scores, feedback = generate_and_score_essay(
+                topic, essay
+            )
+            session['scores'] = scores
+            session['topic'] = topic
+            session['essay'] = essay.replace('\\n', '\n')
+            session['feedback'] = feedback or {}  # Ensure feedback is at least an empty dict
         token = secrets.token_urlsafe(16)
         session['inference_token'] = token
 

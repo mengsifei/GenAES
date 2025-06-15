@@ -277,8 +277,8 @@ h1, h2 {
 
 .flashcard {
     background-color: white;
-    width: 300px;
-    height: 500px;
+    width: 900px;
+    height: 900px;
     margin: 20px;
     perspective: 1000px;
 }
@@ -326,4 +326,22 @@ h1, h2 {
     padding: 20px;
     box-sizing: border-box;
     text-align: justify;
+}
+
+.col-lg-7 {
+    background-color: rgba(68, 68, 68, 0.85); 
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.col-lg-7 h5 {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    color: #f8f9fa;
+}
+
+.col-lg-7 p {
+    font-size: 1rem;
+    line-height: 1.6;
 }

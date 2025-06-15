@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from . import dashboard_bp
-from ..models import History, db
+from ..database import History, db
 
 
 @dashboard_bp.route('/dashboard', defaults={'page': 1})

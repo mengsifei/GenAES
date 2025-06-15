@@ -4,44 +4,178 @@
 
 {% block content %}
 <div class="container mt-4">
+    <!-- Topic Card (same width as comparison) -->
     <div class="row">
-        <!-- Left Column: Topic and Essay -->
-        <div class="col-lg-7">
-            <h5>Topic</h5>
-            <p>{{ topic }}</p>
-            <h5>Essay</h5>
-            <p>{{ essay }}</p>
+        <div class="col-12 mb-4">
+            <div class="card border-primary">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">Topic</h4>
+                </div>
+                <div class="card-body">
+                    <p class="card-text" style="color: black;">{{ topic }}</p>
+                </div>
+            </div>
         </div>
-        <!-- Right Column: Flip Cards -->
-        <div class="col-lg-5">
-            <div class="row">
-                {% set rubrics = [
-                    ('Task Response', result[0], 'How well the essay addresses the prompt.', 'task_response'),
-                    ('Coherence and Cohesion', result[1], 'How well the essay flows', 'coherence_cohesion'),
-                    ('Lexical Resource', result[2], 'How diverse is the vocabulary used.', 'lexical_resource'),
-                    ('Grammatical Range and Accuracy', result[3], 'How correct are the grammatical structures.', 'grammatical_accuracy')
-                ] %}
-                {% for rubric, score, explanation, link in rubrics %}
-                <div class="col-md-6 mb-4">
-                    <div class="flip-card">
-                        <div class="flip-card-inner">
-                            <div class="flip-card-front">
-                                <h3>{{ rubric }}</h3>
-                                <p>Score: {{ score }}</p>
+    </div>
+
+    <!-- Essay Comparison -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card border-primary">
+                <div class="card-header bg-secondary text-white">
+                    <h4 class="mb-0">Essay Comparison</h4>
+                </div>
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <!-- Original Essay -->
+                        <div class="col-md-6 border-end">
+                            <div class="p-3">
+                                <h5 class="text-center text-primary">Original Essay</h5>
+                                <div class="original-essay" id="originalEssay" style="color: black; height: 400px; overflow-y: auto;">
+                                    {{ essay|safe }}
+                                </div>
                             </div>
-                            <div class="flip-card-back">
-                                <p>{{ explanation }}</p>
-                                <a href="{{ url_for('infer.rubric_explanation') }}" class="btn btn-info mt-2">Learn More</a>
+                        </div>
+                        
+                        <!-- Corrected Essay -->
+                        <div class="col-md-6">
+                            <div class="p-3">
+                                <h5 class="text-center text-success">Corrected Essay</h5>
+                                <div class="corrected-essay" id="correctedEssay" style="color: black; height: 400px; overflow-y: auto;">
+                                    {{ corrected_essay|safe }}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
-    <div class="btn-center">
-        <a href="/" class="btn btn-primary mt-3">Back to Submission</a>
+
+    <!-- Rubric Cards (now below comparison) -->
+    <div class="row">
+        {% set rubrics = [
+            ('Task Response', result[0], tr , 'task_response'),
+            ('Coherence and Cohesion', result[1], cc, 'coherence_cohesion'),
+            ('Lexical Resource', result[2], lr, 'lexical_resource'),
+            ('Grammatical Range and Accuracy', result[3], gra, 'grammatical_accuracy')
+        ] %}
+    
+        {% for rubric, score, explanation, link in rubrics %}
+        <div class="col-md-3 mb-4">  <!-- Changed to col-md-3 for 4 cards in a row -->
+            <div class="card h-100 bg-light border-info">  <!-- Changed to light bg with info border -->
+                <div class="card-body">
+                    <h5 class="card-title" style="color: black;">{{ rubric }}</h5>
+                    <div class="score-display mb-3 text-center">  <!-- Centered score -->
+                        <span class="score">{{ score|round|int }}</span>/9
+                    </div>
+                    <p class="card-text text-truncate-multiline text-dark">  <!-- Dark text for better readability -->
+                        {{ explanation }}
+                    </p>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#feedbackModal{{ loop.index }}">
+                            View Feedback
+                        </button>
+                        <a href="{{ url_for('infer.rubric_explanation', rubric=link) }}" class="btn btn-sm btn-outline-info">
+                            Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal for each feedback item -->
+            <div class="modal fade" id="feedbackModal{{ loop.index }}" tabindex="-1" aria-labelledby="feedbackModalLabel{{ loop.index }}" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info text-white">
+                            <h5 class="modal-title" id="feedbackModalLabel{{ loop.index }}">{{ rubric }} Feedback</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                            {{ explanation }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-info" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ url_for('infer.index') }}" class="btn btn-primary">Submit Another Essay</a>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.1/diff.min.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      const origEl = document.getElementById('originalEssay');
+      const corrEl = document.getElementById('correctedEssay');
+      if (!origEl || !corrEl) return;
+
+      const originalText  = origEl.textContent;
+      const correctedText = corrEl.textContent;
+
+      // 2) do the diff
+      const diff = JsDiff.diffWordsWithSpace(originalText, correctedText);
+
+      // if nothing really changed, bail out
+      if (diff.length <= 1) return;
+
+      // 3) clear out the old
+      corrEl.innerHTML = '';
+
+      // 4) re‐render with spans
+      diff.forEach(part => {
+        const span = document.createElement('span');
+        span.textContent = part.value;
+        if (part.added)   span.classList.add('diff-ins');
+        if (part.removed) span.classList.add('diff-del');
+        corrEl.appendChild(span);
+      });
+    }
+    catch (e) {
+      console.error('Diff rendering error:', e);
+    }
+  });
+  </script>
+<style>
+  .diff-ins {border-bottom:2px solid #28a745; }
+  .diff-del {text-decoration: line-through; color: #dc3545; }
+
+    /* Custom styles */
+    .score-display {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    
+    .score {
+        color: #0d6efd;  /* Changed to Bootstrap primary blue */
+        font-size: 1.5rem;
+    }
+    
+    .text-truncate-multiline {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-height: 4.5em;
+    }
+    
+    .card {
+        transition: transform 0.2s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.25);  /* Primary blue shadow */
+    }
+</style>
 {% endblock %}
