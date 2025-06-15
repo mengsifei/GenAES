@@ -17,7 +17,7 @@ def infer():
     scores = session.get('scores', [])
     topic = session.get('topic', "")
     essay = session.get('essay', "")
-    feedback = session.get('feedback', {})
+    feedback = session.get('feedback', {}) or {}
     feedback = dict(feedback)
     tr_feedback = feedback.get('TR_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
     cc_feedback = feedback.get('CC_feedback', 'No feedback available. Your essay does not make sense, try to refine it.')
@@ -26,7 +26,6 @@ def infer():
     corrected_essay = feedback.get('Corrected_essay', "No suggestions available. Your essay does not make sense, try to refine it.")
     essay = essay.replace('\n', '<br>')
     corrected_essay = corrected_essay.replace('\\n\\n', '\\n').replace('\\n', '<br>')
-    # print(corrected_essay)
     session.pop('inference_token', None)
     return render_template('infer.html', result=scores, topic=topic, essay=essay, tr=tr_feedback, cc=cc_feedback, lr=lr_feedback, gra=gra_feedback, corrected_essay=corrected_essay)
 
@@ -55,9 +54,8 @@ def index():
             session['feedback'] = feedback or {}  # Ensure feedback is at least an empty dict
         token = secrets.token_urlsafe(16)
         session['inference_token'] = token
-
         if current_user.is_authenticated:
-            scores = [int(score) for score in scores]
+            scores = [int(score) for score in session['scores']]
             new_history = History(
                 user_id=current_user.id,
                 topic=topic,
