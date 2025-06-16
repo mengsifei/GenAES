@@ -7,6 +7,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 3478
+RUN python -m spacy download en_core_web_sm
 
-CMD ["python", "app.py"]
+EXPOSE 1054
+
+CMD ["python3", "app.py"]
