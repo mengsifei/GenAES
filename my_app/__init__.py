@@ -21,11 +21,8 @@ def load_models():
     global MODELS_LOADED, LONGFORMER_TOKENIZER, LONGFORMER_MODEL, QWEN_TOKENIZER, QWEN_MODEL
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     if not MODELS_LOADED:
-        LONGFORMER_TOKENIZER = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
-        config = LongformerConfig.from_json_file("checkpoints/Longformer_checkpoint/config.json")
-        LONGFORMER_MODEL = CustomLongformerForSequenceClassification(config)
-        state_dict = load_file("checkpoints/Longformer_checkpoint/model.safetensors", device=device, use_safetensors=True)
-        LONGFORMER_MODEL.load_state_dict(state_dict)
+        LONGFORMER_TOKENIZER = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096', device='auto')
+        LONGFORMER_MODEL = CustomLongformerForSequenceClassification().from_pretrained('SFM2001/LongFormerScorer', device='auto')
         LONGFORMER_MODEL.eval()
         
         model_name = 'Qwen/Qwen3-1.7B'
