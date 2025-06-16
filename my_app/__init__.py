@@ -19,12 +19,12 @@ MODEL_SESSION = None
 
 def load_models():
     global MODELS_LOADED, LONGFORMER_TOKENIZER, LONGFORMER_MODEL, QWEN_TOKENIZER, QWEN_MODEL
-    
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     if not MODELS_LOADED:
         LONGFORMER_TOKENIZER = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
         config = LongformerConfig.from_json_file("checkpoints/Longformer_checkpoint/config.json")
         LONGFORMER_MODEL = CustomLongformerForSequenceClassification(config)
-        state_dict = load_file("checkpoints/Longformer_checkpoint/model.safetensors", device="cpu")
+        state_dict = load_file("checkpoints/Longformer_checkpoint/model.safetensors", device=device)
         LONGFORMER_MODEL.load_state_dict(state_dict)
         LONGFORMER_MODEL.eval()
         
