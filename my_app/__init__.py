@@ -24,7 +24,7 @@ def load_models():
         LONGFORMER_TOKENIZER = LongformerTokenizer.from_pretrained('allenai/longformer-base-4096')
         config = LongformerConfig.from_json_file("checkpoints/Longformer_checkpoint/config.json")
         LONGFORMER_MODEL = CustomLongformerForSequenceClassification(config)
-        state_dict = load_file("checkpoints/Longformer_checkpoint/model.safetensors", device=device)
+        state_dict = load_file("checkpoints/Longformer_checkpoint/model.safetensors", device=device, use_safetensors=True)
         LONGFORMER_MODEL.load_state_dict(state_dict)
         LONGFORMER_MODEL.eval()
         
